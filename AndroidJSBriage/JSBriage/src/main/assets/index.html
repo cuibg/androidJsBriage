@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>test location</title>
+</head>
+<body>
+<div>
+    <p id="output" style="width: 100% ;height: 100px;padding-top: 100px;text-align:center" ;></p>
+    <img id="iamge" style="width:100px; height: 100px;"/>
+    <button onclick="boncAppEngine.locationManager.start(
+    function (location) {
+       output.innerHTML='longitude:'+location.longitude+'</br> latitude:'+location['latitude']+'</br>speed:'+location.speed+'</br>timestamp:'+location['timestamp'];},
+     function (error){
+       output.innerHTML= 'locationError: '+error.description;
+     })">start location</button>
+    <button onclick="boncAppEngine.locationManager.stop()">stop location</button>
+    <button onclick="boncAppEngine.codeScanner.scan(
+    function (info){output.innerHTML= 'CodeScanInfo: '+info.codeInfo;},
+    null,
+    function (error){output.innerHTML= 'CodeScanError: '+error.description;})">scanCode</button>
+    <button onclick="boncAppEngine.device.getDeviceInfo(
+        function (device) {
+        output.innerHTML='name:'+device.name+'</br> model:'+device['detailModel']+'</br>platform:'+device.platform+'</br>version:'+device['version'];
+        },
+        function (error){
+        output.innerHTML= 'GetDeviceInfoError: '+error.description;
+        })">deviceInfo</button>
+    <button onclick="boncAppEngine.camera.takePhoto(boncAppEngine.mediaType.JPEG,50,
+        function (imageInfo) {
+        var image= document.getElementById('iamge');
+        image.src=imageInfo.dataURL;
+        },
+        null,
+        function (error){
+        output.innerHTML= 'TakePhotoError: '+error.description;
+        })">camera</button>
+    <button onclick="boncAppEngine.device.vibrate(5,
+        function (info){output.innerHTML= 'vibration over'})">vibrate</button>
+    <button onclick="boncAppEngine.accelerometer.start(
+        function (data) {
+        output.innerHTML='X:'+data.x+'</br> Y:'+data['y']+'</br>Z:'+data.z+'</br>timeStamp:'+data['timestamp'];
+        },
+        function (error){
+        output.innerHTML= 'accelerometerError: '+error.description;
+        })">start accelerometer</button>
+    <button onclick="boncAppEngine.accelerometer.stop()">stop accelerometer</button>
+    <button onclick="boncAppEngine.contacts.newContact(
+        function (contactInfo){output.innerHTML= 'contactID: '+contactInfo['id']},
+        function(){},
+        function(error){output.innerHTML= 'newContactError: '+error.description;})">create contact</button>
+    <button onclick="boncAppEngine.contacts.chooseContact(
+        function(conatactInfo){
+        },
+        function(){},
+        function(error){output.innerHTML= 'chooseContactError: '+error.description;})">choose contact</button>
+<!--    <button onclick="boncAppEngine.contacts.displayContact(515,true,-->
+<!--        function (error){output.innerHTML= 'displayContactError: '+error.description;})"> displayContact</button>-->
+</div>
+</body>
+<script src="BoncAppEngine.js"></script>
+</html>
